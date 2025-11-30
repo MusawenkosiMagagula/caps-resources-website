@@ -1,0 +1,19 @@
+{
+  "name": "caps-resources-store",
+  "version": "1.0.0",
+  "description": "CAPS Resources - Online Store for Educational PDF Downloads",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx live-server --port=3000 --open=/index.html",
+    "start": "npx live-server --port=3000 --open=/index.html"
+  },
+  "keywords": [
+    "education",
+    "caps",
+    "resources",
+    "pdf",
+    "online-store"
+  ],
+  "author": "CAPS Resources",
+  "license": "ISC"
+}
