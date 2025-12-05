@@ -2,6 +2,24 @@
 let cart = [];
 let cartCount = 0;
 
+// Subject data for each grade
+const gradeSubjects = {
+    'preschool': ['Life Skills', 'English', 'Mathematics', 'Creative Arts'],
+    'reception': ['Life Skills', 'English', 'Mathematics', 'Creative Arts', 'Afrikaans'],
+    'grade1': ['Home Language', 'First Additional Language', 'Mathematics', 'Life Skills'],
+    'grade2': ['Home Language', 'First Additional Language', 'Mathematics', 'Life Skills'],
+    'grade3': ['Home Language', 'First Additional Language', 'Mathematics', 'Life Skills'],
+    'grade4': ['Home Language', 'First Additional Language', 'Mathematics', 'Natural Sciences', 'Social Sciences', 'Life Skills'],
+    'grade5': ['Home Language', 'First Additional Language', 'Mathematics', 'Natural Sciences', 'Social Sciences', 'Life Skills'],
+    'grade6': ['Home Language', 'First Additional Language', 'Mathematics', 'Natural Sciences', 'Social Sciences', 'Life Skills'],
+    'grade7': ['Home Language', 'First Additional Language', 'Mathematics', 'Natural Sciences', 'Social Sciences', 'Technology', 'Creative Arts'],
+    'grade8': ['Home Language', 'First Additional Language', 'Mathematics', 'Natural Sciences', 'Social Sciences', 'Technology', 'Creative Arts', 'Economic Management Sciences'],
+    'grade9': ['Home Language', 'First Additional Language', 'Mathematics', 'Natural Sciences', 'Social Sciences', 'Technology', 'Creative Arts', 'Economic Management Sciences'],
+    'grade10': ['English', 'Afrikaans', 'Mathematics', 'Mathematical Literacy', 'Physical Sciences', 'Life Sciences', 'Accounting', 'Business Studies', 'Economics', 'Geography', 'History', 'Life Orientation'],
+    'grade11': ['English', 'Afrikaans', 'Mathematics', 'Mathematical Literacy', 'Physical Sciences', 'Life Sciences', 'Accounting', 'Business Studies', 'Economics', 'Geography', 'History', 'Life Orientation'],
+    'grade12': ['English', 'Afrikaans', 'Mathematics', 'Mathematical Literacy', 'Physical Sciences', 'Life Sciences', 'Accounting', 'Business Studies', 'Economics', 'Geography', 'History', 'Life Orientation']
+};
+
 // Update cart count display
 function updateCartCount() {
     const cartCountElement = document.querySelector('.cart-count');
@@ -48,6 +66,56 @@ function showNotification(message) {
     }, 3000);
 }
 
+// Show subjects for a grade
+function showSubjects(grade, gradeName) {
+    const subjects = gradeSubjects[grade];
+    if (!subjects) return;
+    
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.className = 'subjects-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2 class="modal-title">${gradeName} - Select a Subject</h2>
+            <div class="subjects-grid">
+                ${subjects.map(subject => `
+                    <div class="subject-card">
+                        <div class="subject-icon">📚</div>
+                        <h3>${subject}</h3>
+                        <p>Click here for ${subject} Resources</p>
+                        <button class="btn-subject" onclick="viewSubject('${grade}', '${subject}')">View Resources</button>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close modal functionality
+    const closeBtn = modal.querySelector('.close-modal');
+    closeBtn.addEventListener('click', () => {
+        modal.style.animation = 'fadeOut 0.3s ease-out';
+        setTimeout(() => document.body.removeChild(modal), 300);
+    });
+    
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.animation = 'fadeOut 0.3s ease-out';
+            setTimeout(() => document.body.removeChild(modal), 300);
+        }
+    });
+}
+
+// View subject resources
+function viewSubject(grade, subject) {
+    showNotification(`Loading ${subject} resources for ${grade}...`);
+    // Here you would load the actual resources
+    console.log(`Loading resources for ${grade} - ${subject}`);
+}
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -88,16 +156,22 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('.btn-grade').forEach(button => {
     button.addEventListener('click', function(e) {
         const gradeCard = this.closest('.grade-card');
-        const gradeName = gradeCard.querySelector('.grade-header h3').textContent;
+        const gradeName = gradeBtn.closest('.grade-card').querySelector('h3').textContent;
+        const gradeClass = gradeBtn.closest('.grade-card').classList;
+        let grade = '';
         
-        // In a real application, this would navigate to the grade-specific page
-        showNotification(`Loading ${gradeName} resources...`);
+        // Extract grade identifier from class list
+        gradeClass.forEach(className => {
+            if (gradeSubjects[className]) {
+                grade = className;
+            }
+        });
         
-        // Simulate loading delay
-        setTimeout(() => {
-            // Here you would typically navigate to a grade-specific page
-            console.log(`Navigating to ${gradeName} resources page`);
-        }, 1000);
+        if (grade) {
+            showSubjects(grade, gradeName);
+        } else {
+            showNotification(`Loading ${gradeName} resources...`);
+        }
     });
 });
 
