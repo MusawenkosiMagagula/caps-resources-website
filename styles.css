@@ -226,6 +226,9 @@ body {
 
 .hero-content {
     text-align: center;
+}
+
+.hero-content.with-bg {
     padding: 3rem 2rem;
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.95) 0%, rgba(255, 152, 0, 0.95) 50%, rgba(76, 175, 80, 0.95) 100%);
     border-radius: 20px;
@@ -245,10 +248,6 @@ body {
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.4), 0px 0px 25px rgba(255, 255, 0, 0.8);
     letter-spacing: 2px;
     animation: fadeInDown 0.8s ease-out;
-    background: linear-gradient(120deg, #FFD700, #FF6B35, #4CAF50);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .hero-subtitle {
@@ -594,6 +593,57 @@ body {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     opacity: 0.95;
+}
+
+/* Schools Section */
+.schools-section {
+    padding: 5rem 0;
+    background: #f8f9fa;
+}
+
+.schools-section .section-title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.schools-section .section-subtitle {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text-light);
+}
+
+.schools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.school-logo {
+    width: 180px;
+    height: 140px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.school-logo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.school-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
 }
 
 /* Footer */
