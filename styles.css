@@ -5,6 +5,29 @@
     box-sizing: border-box;
 }
 
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 :root {
     --preschool: #00A651;
     --reception: #FF6B35;
@@ -206,17 +229,25 @@ body {
 }
 
 .hero-title {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 3.5rem;
+    font-weight: 800;
     margin-bottom: 1rem;
     line-height: 1.2;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0px 0px 20px rgba(76, 175, 80, 0.6);
+    letter-spacing: 1px;
+    animation: fadeInDown 0.8s ease-out;
 }
 
 .hero-subtitle {
-    font-size: 1.05rem;
+    font-size: 1.3rem;
     margin-bottom: 2rem;
-    opacity: 0.95;
+    opacity: 1;
     line-height: 1.8;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+    font-weight: 500;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
 }
 
 .hero-stats {
