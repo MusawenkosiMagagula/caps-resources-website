@@ -226,6 +226,14 @@ body {
 
 .hero-content {
     text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.95) 0%, rgba(255, 152, 0, 0.95) 50%, rgba(76, 175, 80, 0.95) 100%);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 3px solid #FFD700;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: pulse 2s ease-in-out infinite;
 }
 
 .hero-title {
@@ -234,9 +242,13 @@ body {
     margin-bottom: 1rem;
     line-height: 1.2;
     color: #FFFFFF;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0px 0px 20px rgba(76, 175, 80, 0.6);
-    letter-spacing: 1px;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.4), 0px 0px 25px rgba(255, 255, 0, 0.8);
+    letter-spacing: 2px;
     animation: fadeInDown 0.8s ease-out;
+    background: linear-gradient(120deg, #FFD700, #FF6B35, #4CAF50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-subtitle {
@@ -245,9 +257,18 @@ body {
     opacity: 1;
     line-height: 1.8;
     color: #FFFFFF;
-    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
-    font-weight: 500;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
     animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 107, 53, 0.3);
+    }
+    50% {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 50px rgba(255, 107, 53, 0.6);
+    }
 }
 
 .hero-stats {
