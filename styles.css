@@ -169,25 +169,29 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(102, 126, 234, 0.75), rgba(118, 75, 162, 0.75)), url('images/classroom-hero.jpg');
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url('images/hero-section.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
     color: white;
-    padding: 3rem 0;
+    padding: 6rem 0;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .hero-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3rem;
     align-items: center;
+    width: 100%;
 }
 
 .hero-image {
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    display: none;
 }
 
 .hero-image img {
@@ -198,7 +202,7 @@ body {
 }
 
 .hero-content {
-    text-align: left;
+    text-align: center;
 }
 
 .hero-title {
