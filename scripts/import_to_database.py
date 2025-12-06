@@ -54,7 +54,7 @@ def generate_description(result):
     return description
 
 def import_to_database():
-    """Import organized PDFs into MongoDB"""
+    """Import organized files into MongoDB"""
     print("=" * 80)
     print("IMPORTING RESOURCES TO DATABASE")
     print("=" * 80)
@@ -76,6 +76,15 @@ def import_to_database():
     skipped = 0
     errors = 0
     
+    # Map file types to content types for database
+    content_type_map = {
+        'pdf': 'PDF Document',
+        'word': 'Word Document',
+        'excel': 'Excel Spreadsheet',
+        'powerpoint': 'PowerPoint Presentation',
+        'archive': 'Resource Bundle'
+    }
+    
     for result in results:
         try:
             # Check if already exists
@@ -87,6 +96,11 @@ def import_to_database():
                 print(f"⏭️  Skipping {result['new_filename']} (already exists)")
                 skipped += 1
                 continue
+            
+            # Get file extension
+            file_ext = result.get('extension', '').lower()
+            file_type = result.get('file_type', 'pdf').upper()
+            content_type = content_type_map.get(result.get('file_type', 'pdf'), 'Document')
             
             # Create product document
             product = {
@@ -103,6 +117,8 @@ def import_to_database():
                 'pdfFileName': result['new_filename'],
                 'fileSize': result['file_size'],
                 'pages': result['pages'],
+                'fileType': file_type,
+                'contentType': content_type,
                 'thumbnail': f"/images/products/{result['grade']}-{result['subject'].lower().replace(' ', '-')}.jpg",
                 'category': result['type'],
                 'tags': [
@@ -111,7 +127,8 @@ def import_to_database():
                     result['type'],
                     result['year'],
                     'CAPS',
-                    'South Africa'
+                    'South Africa',
+                    file_type
                 ],
                 'downloads': 0,
                 'isActive': True,
@@ -120,7 +137,7 @@ def import_to_database():
             
             # Insert into database
             products_collection.insert_one(product)
-            print(f"✅ Imported: {product['title']}")
+            print(f"✅ Imported: {product['title']} ({file_type})")
             imported += 1
             
         except Exception as e:
@@ -137,10 +154,23 @@ def import_to_database():
     print(f"📊 Total in database: {products_collection.count_documents({})}")
     
     # Show breakdown by grade
-    print("\n📚 Database Breakdown:")
+    print("\n📚 Database Breakdown by Grade:")
     pipeline = [
         {'$group': {
             '_id': '$grade',
+            'count': {'$sum': 1}
+        }},
+        {'$sort': {'_id': 1}}
+    ]
+    
+    for item in products_collection.aggregate(pipeline):
+        print(f"  {item['_id']}: {item['count']} resources")
+    
+    # Show breakdown by file type
+    print("\n📋 Database Breakdown by File Type:")
+    pipeline = [
+        {'$group': {
+            '_id': '$fileType',
             'count': {'$sum': 1}
         }},
         {'$sort': {'_id': 1}}

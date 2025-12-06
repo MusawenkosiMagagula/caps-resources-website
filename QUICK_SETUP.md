@@ -1,4 +1,4 @@
-# Quick Setup Guide for PDF Organization
+# Quick Setup Guide for Document Organization
 
 ## Step-by-Step Instructions
 
@@ -11,14 +11,20 @@ cd C:\caps-resources-website\scripts
 pip install -r requirements.txt
 ```
 
-### 2. Place Your PDFs
+### 2. Place Your Documents
 
-Put all your PDF resources in the `resources` folder:
+Put all your documents in the `Website` folder:
 ```
-C:\caps-resources-website\resources\
+C:\caps-resources-website\Website\
 ```
 
-You can put them in any subfolders - the script will find them all.
+Supported file types:
+- ✅ PDF (.pdf)
+- ✅ Word Documents (.docx, .doc)
+- ✅ Excel Spreadsheets (.xlsx, .xls)
+- ✅ PowerPoint (.pptx, .ppt)
+
+You can put them in any subfolder structure - the script will find them all.
 
 ### 3. Run the Organization Script
 
@@ -54,57 +60,94 @@ python import_to_database.py
 
 ## What the Script Does
 
-1. **Scans** all PDFs in the resources folder
-2. **Reads** the first page of each PDF
+1. **Scans** all documents in the Website folder
+2. **Reads** the content of each document
 3. **Extracts** metadata (grade, subject, type, year)
-4. **Renames** PDFs to: `grade-subject-type-year.pdf`
+4. **Renames** to: `grade-subject-type-year.extension`
 5. **Organizes** into folders: `grade/subject/`
 6. **Generates** a JSON report with all details
+
+## Smart Content Detection
+
+The script is intelligent:
+- **Doesn't rely on filenames** - reads the actual content
+- **Ignores random names/symbols** - focuses on document content
+- **Finds grade & subject** from the text inside
+- **Detects document type** (worksheet, test, lesson plan, etc.)
+- **Extracts year** from content
+- **Scores matches** to find most relevant subject
 
 ## Example
 
 **Before:**
 ```
-resources/
-├── math worksheet gr 1.pdf
-├── Grade 2 English Test 2024.pdf
-└── science_notes_grade_7.pdf
+Website/
+├── asdfgh_2024.pdf (contains Grade 7 Mathematics content)
+├── document1.docx (English Grade 1 lesson plan)
+└── file_343_data.xlsx (Grade 5 Science assessment)
 ```
 
 **After:**
 ```
 server/storage/pdfs/
-├── grade1/
+├── grade7/
 │   └── Mathematics/
-│       └── grade1-mathematics-worksheets-2024.pdf
-├── grade2/
+│       └── grade7-mathematics-worksheets-2024.pdf
+├── grade1/
 │   └── English/
-│       └── grade2-english-assessments-2024.pdf
-└── grade7/
+│       └── grade1-english-lesson-plans-2024.docx
+└── grade5/
     └── Natural-Sciences/
-        └── grade7-natural-sciences-study-guides-2024.pdf
+        └── grade5-natural-sciences-assessments-2024.xlsx
 ```
+
+## Supported Categories
+
+### Grades
+- Preschool, Reception, Grade 1-12
+
+### Subjects
+- Mathematics, English, Afrikaans
+- Life Skills, Natural Sciences, Social Sciences
+- Physical Sciences, Life Sciences
+- Accounting, Business Studies, Economics
+- Technology, Creative Arts
+- Mathematical Literacy
+
+### Resource Types
+- Worksheets
+- Assessments
+- Lesson Plans
+- Activities
+- Study Guides
+
+### File Types
+- PDF
+- Word (DOCX, DOC)
+- Excel (XLSX, XLS)
+- PowerPoint (PPTX, PPT)
 
 ## Troubleshooting
 
 ### "pip is not recognized"
 Install Python from https://www.python.org/ and check "Add to PATH"
 
-### "No PDFs found"
-Make sure PDFs are in `C:\caps-resources-website\resources\`
+### "No documents found"
+Make sure documents are in `C:\caps-resources-website\Website\`
 
 ### "Could not determine grade"
-The first page doesn't have clear grade information. Add manually or improve patterns in the script.
+The document doesn't have clear grade information in its content. Check if it's readable.
 
 ### "MongoDB connection error"
 Make sure MongoDB is installed and running, or use MongoDB Atlas cloud.
 
 ## Tips
 
-- **Test First**: Try with 5-10 PDFs before processing all
-- **Check Quality**: Ensure PDFs have readable text (not just images)
+- **Test First**: Try with 5-10 documents before processing all
+- **Check Quality**: Ensure documents are readable (not corrupted)
 - **Review JSON**: Check `_organization_results.json` for accuracy
 - **Keep Originals**: The script copies files, your originals are safe
+- **Content Matters**: The better the document content, the better the categorization
 
 ## Need Help?
 
